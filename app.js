@@ -2,11 +2,17 @@ var express = require('express');
 var app = express();
 var bodyParser  = require('body-parser');
 var jwt = require('jsonwebtoken');
+var config = require('./config.js');
 
 //bootstrap deps to app instance as DI container
 app.data = require('./services/dataService.js')(app);
 app.myRouter = express.Router();
 
+//load config
+var env = process.env.NODE_ENV;
+app.config = config[env];
+
+//convert request and respond bodies to json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
