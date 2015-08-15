@@ -16,18 +16,18 @@ app.config = config[env];
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-var authentication_handler = require('./routesHandlers/authenticationHandler.js');
 //authentication
+var authentication_handler = require('./routesHandlers/authenticationHandler.js');
 app.myRouter.use(function (req, res, next) {
     authentication_handler(app.data, req, res, next);
 });
 
-var data_entity_handler = require('./routesHandlers/dataEntityHandler.js')(app);
 //mout data entity routes
+var data_entity_handler = require('./routesHandlers/dataEntityHandler.js')(app);
 app.use('/api/v1/entity', data_entity_handler);
 
-var not_found_handler = require('./routesHandlers/notfoundDataHandler.js');
 //error catcher
+var not_found_handler = require('./routesHandlers/notfoundDataHandler.js');
 app.use(function (req, res) {
    not_found_handler(req, res);
 });
@@ -36,6 +36,12 @@ app.use(function (req, res) {
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
+});
+
+process.on('uncaughtException', function(){
+    console.log(err);
+    //Send some notification about the error  
+    process.exit(1);
 });
 
 module.export = app;
