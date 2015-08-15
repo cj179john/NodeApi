@@ -13,4 +13,6 @@ the app should be available on port: 3000
 
 use curl or POSTMAN to test the api
 
-eg: curl -X GET 'localhost:3000/api/v1/entity/customers?user=john&password=john'
+eg: 
+curl -X GET 'localhost:3000/api/v1/entity/customers?user=john&password=john'
+curl -X POST --header 'Content-type: application/json' --data '{"name":"test"}' 'localhost:3000/api/v1/entity/customers?user=john&password=john'
