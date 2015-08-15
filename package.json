@@ -12,6 +12,7 @@
     "async": "^0.8.0",
     "bcrypt": "^0.7.8",
     "body-parser": "^1.13.3",
+    "cors": "^2.7.1",
     "debug": "^0.7.4",
     "express": "^4.0.0",
     "express-jwt": "^0.2.2",

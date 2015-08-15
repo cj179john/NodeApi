@@ -4,6 +4,9 @@ var bodyParser  = require('body-parser');
 var jwt = require('jsonwebtoken');
 var config = require('./config.js');
 
+//enable all cors call
+app.use(cors());
+
 //bootstrap deps to app instance as DI container
 app.data = require('./services/dataService.js')(app);
 app.myRouter = express.Router();
