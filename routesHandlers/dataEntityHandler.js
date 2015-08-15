@@ -14,21 +14,10 @@ module.exports = function(app) {
     });
     app.myRouter.post('/:entity', function(req, res, next) {
         var entity = req.params.entity;
-        var queryData = '';
-        req.on('data', function(data) {
-            queryData += data;
-            if(queryData.length > 1e6) {
-                queryData = '';
-                response.writeHead(413, {'Content-Type': 'text/plain'}).end();
-                req.connection.destroy();
-            }
-        });
+        var new_enttiy = req.body;
 
-        req.on('end', function() {
-            data.insertData(entity, queryData); 
-            res.json(data.getData(req.params.entity));
-        });
-
+        data.insertData(entity, new_enttiy); 
+        res.json(data.getData(req.params.entity));
     });
     return app.myRouter;
 };
