@@ -3,7 +3,7 @@ var app = express();
 var bodyParser  = require('body-parser');
 var jwt = require('jsonwebtoken');
 var config = require('./config.js');
-
+var cors = require('cors');
 //enable all cors call
 app.use(cors());
 
