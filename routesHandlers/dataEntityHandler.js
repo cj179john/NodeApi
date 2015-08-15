@@ -15,7 +15,6 @@ module.exports = function(app) {
     app.myRouter.post('/:entity', function(req, res, next) {
         var entity = req.params.entity;
         var new_enttiy = req.body;
-
         data.insertData(entity, new_enttiy); 
         res.json(data.getData(req.params.entity));
     });

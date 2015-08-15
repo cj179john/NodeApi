@@ -11,15 +11,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 var authentication_handler = require('./routesHandlers/authenticationHandler.js');
-
+//authentication
 app.myRouter.use(function (req, res, next) {
     authentication_handler(app.data, req, res, next);
 });
 
 var data_entity_handler = require('./routesHandlers/dataEntityHandler.js')(app);
 //mout data entity routes
-
 app.use('/api/v1/entity', data_entity_handler);
+
+var not_found_handler = require('./routesHandlers/notfoundDataHandler.js');
+//error catcher
+app.use(function (req, res) {
+   not_found_handler(req, res);
+});
 
 //start server on port 3000
 var server = app.listen(3000, function () {

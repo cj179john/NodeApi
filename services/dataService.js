@@ -14,10 +14,16 @@ module.exports = function (app) {
             password: 'john'
         }],
         getData : function (entity) {
+            if (typeof this[entity] == 'undefined') {
+                throw 'entity' + entity + ' is undefined'; 
+            }
             return this[entity];
         },
         insertData : function (entity, data) {
             var dataEntity = this[entity];
+            if (typeof this[entity] == 'undefined') {
+                throw 'entity ' + entity + ' is undefined'; 
+            }
             dataEntity.push(data);
         }, 
     };
