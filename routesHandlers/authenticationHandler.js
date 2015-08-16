@@ -14,6 +14,7 @@ module.exports = function(data, req, res, next) {
             res.send('authentication error');
             return;
         }
+        
+        next();
     });
-    next();
 };
