@@ -13,18 +13,23 @@ module.exports = function (app) {
             name: 'john',
             password: 'john'
         }],
-        getData : function (entity) {
+        getData : function (entity, callback) {
+            var error;
+
             if (typeof this[entity] == 'undefined') {
-                throw 'entity' + entity + ' is undefined'; 
+                error = 'entity' + entity + ' is undefined'; 
             }
-            return this[entity];
+            
+            callback(error, this[entity]);
         },
-        insertData : function (entity, data) {
+        insertData : function (entity, data, callback) {
+            var error;
             var dataEntity = this[entity];
             if (typeof this[entity] == 'undefined') {
-                throw 'entity ' + entity + ' is undefined'; 
+                error = 'entity ' + entity + ' is undefined'; 
             }
             dataEntity.push(data);
+            callback(error, true);
         }, 
     };
     

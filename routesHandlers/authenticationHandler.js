@@ -1,14 +1,19 @@
 module.exports = function(data, req, res, next) {
-    var authenticated  = function () {
-        var request_user_name = req.query.user;
-        var request_user_password = req.query.password;
-        var user_name = data.getData('users')[0].name;
-        var user_password = data.getData('users')[0].password;
-        return request_user_name == user_name && user_password == request_user_password;
-    };
-    if (!authenticated()) { 
-        res.send('authentication error');
-        return;
-    } 
+    var request_user_name = req.query.user;
+    var request_user_password = req.query.password;
+    data.getData('users', function (err, data) {
+        if (err) {
+            res.json(err);
+            return;
+        }
+
+        var user_name = data[0].name;
+        var user_password = data[0].password;
+        var authenticate =  request_user_name == user_name && user_password == request_user_password;
+        if (!authenticate) {
+            res.send('authentication error');
+            return;
+        }
+    });
     next();
 };
