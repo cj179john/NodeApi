@@ -18,7 +18,7 @@ app.data = require('./services/dataService.js')(app);
 app.myRouter = express.Router();
 
 //load config
-var env = process.env.NODE_ENV;
+var env = process.env.NODE_ENV? process.env.NODE_ENV : 'development';
 app.config = config[env];
 
 //convert request and respond bodies to json
@@ -42,15 +42,15 @@ app.use(function (req, res) {
 });
 
 //start server on port 3000
-var server = app.listen(3000, function () {
+var server = app.listen(app.config.port, function () {
   var host = server.address().address;
   var port = server.address().port;
 });
 
-process.on('uncaughtException', function(){
+process.on('uncaughtException', function(err){
     console.log(err);
     //Send some notification about the error  
     process.exit(1);
 });
 
-module.export = app;
+exports = module.exports = app;

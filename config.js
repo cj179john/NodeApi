@@ -1,9 +1,12 @@
 module.exports = {
+    test: {
+        port: 3333
+    },
     development: {
-        'test' : 'dev'
+        port: 3000
     },
     production: {
-        'test' : 'prod'
+        port : 3000
     }
 };
 
