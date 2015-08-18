@@ -1,4 +1,3 @@
-module.exports = function(req, res) {
-    res.status(500);
-    res.json('Invalid request');
+module.exports = function(req, res, eventEmitter) {
+    eventEmitter.emit('error', {response: res, status : '500', message: 'invalid request'});
 };

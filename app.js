@@ -4,8 +4,14 @@ var bodyParser  = require('body-parser');
 var jwt = require('jsonwebtoken');
 var config = require('./config.js');
 var cors = require('cors');
+var events = require('events');
+
 //enable all cors call
 app.use(cors());
+
+//event emitter 
+app.eventEmitter = new events.EventEmitter();
+require('./services/eventService.js')(app.eventEmitter);
 
 //bootstrap deps to app instance as DI container
 app.data = require('./services/dataService.js')(app);
@@ -32,7 +38,7 @@ app.use('/api/v1/entity', data_entity_handler);
 //error catcher
 var not_found_handler = require('./routesHandlers/notfoundDataHandler.js');
 app.use(function (req, res) {
-   not_found_handler(req, res);
+   not_found_handler(req, res, app.eventEmitter);
 });
 
 //start server on port 3000

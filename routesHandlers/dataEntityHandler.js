@@ -5,10 +5,10 @@ module.exports = function(app) {
         var entity = req.params.entity;
         data.getData(entity, function (err, entity_data) {
             if (err) {
-                res.status(500);
+                app.eventEmitter.emit('error', {response:res, message: 'entity ' + entity + ' is undefined'});
+                return;
             }
-            var result = (err)? err : entity_data; 
-            res.json(result);
+            res.json(entity_data);
         });
     });
     app.myRouter.put('/:entity', function(req, res, next) {
@@ -20,20 +20,21 @@ module.exports = function(app) {
     app.myRouter.post('/:entity', function(req, res, next) {
         var entity = req.params.entity;
         var new_entity = req.body;
+
         if (Object.getOwnPropertyNames(new_entity).length === 0) {
-            res.json('cannot not insert empty data');
+            app.eventEmitter.emit('error', {response:res, message: 'cannot not insert empty data'});
         }
         data.insertData(entity, new_entity, function (err, result) {
             if (err) {
-                res.status(500);
-                res.json(err);
+                app.eventEmitter.emit('error', {response:res});
                 return;
             }
             data.getData(req.params.entity, function (err, entity_data) {
                 if (err) {
-                    res.status(500);
+                    app.eventEmitter.emit('error', {response:res});
+                    return;
                 }
-                res.json((err)? err : entity_data); 
+                res.json(entity_data); 
             });
         }); 
     });
