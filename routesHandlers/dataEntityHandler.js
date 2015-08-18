@@ -5,8 +5,8 @@ module.exports = function(app) {
         var entity = req.params.entity;
         data.getData(entity, function (err, entity_data) {
             if (err) {
-                app.eventEmitter.emit('error', {response:res, message: 'entity ' + entity + ' is undefined'});
-                return;
+                app.eventEmitter.emit('error', {response:res, message: err});
+                next(err);
             }
             res.json(entity_data);
         });
@@ -20,23 +20,21 @@ module.exports = function(app) {
     app.myRouter.post('/:entity', function(req, res, next) {
         var entity = req.params.entity;
         var new_entity = req.body;
-
-        if (Object.getOwnPropertyNames(new_entity).length === 0) {
+        var entity_is_empty = Object.getOwnPropertyNames(new_entity).length === 0;
+        
+        if (entity_is_empty) {
             app.eventEmitter.emit('error', {response:res, message: 'cannot not insert empty data'});
         }
-        data.insertData(entity, new_entity, function (err, result) {
-            if (err) {
-                app.eventEmitter.emit('error', {response:res});
-                return;
-            }
-            data.getData(req.params.entity, function (err, entity_data) {
+        if (!entity_is_empty) {
+
+            data.insertData(entity, new_entity, function (err, result, next) {
                 if (err) {
-                    app.eventEmitter.emit('error', {response:res});
-                    return;
+                    app.eventEmitter.emit('error', {response:res, message: err});
+                    next(err);
                 }
-                res.json(entity_data); 
-            });
-        }); 
+                res.json(result);
+            }); 
+        }
     });
     return app.myRouter;
 };
