@@ -4,6 +4,9 @@ module.exports = function(app) {
     app.myRouter.get('/:entity', function(req, res, next) {
         var entity = req.params.entity;
         data.getData(entity, function (err, entity_data) {
+            if (err) {
+                res.status(500);
+            }
             var result = (err)? err : entity_data; 
             res.json(result);
         });
@@ -22,10 +25,14 @@ module.exports = function(app) {
         }
         data.insertData(entity, new_entity, function (err, result) {
             if (err) {
+                res.status(500);
                 res.json(err);
                 return;
             }
             data.getData(req.params.entity, function (err, entity_data) {
+                if (err) {
+                    res.status(500);
+                }
                 res.json((err)? err : entity_data); 
             });
         }); 

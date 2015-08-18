@@ -17,7 +17,7 @@ module.exports = function (app) {
             var error;
 
             if (typeof this[entity] == 'undefined') {
-                error = 'entity' + entity + ' is undefined'; 
+                error = 'entity ' + entity + ' is undefined'; 
             }
             
             callback(error, this[entity]);
