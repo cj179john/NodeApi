@@ -1,25 +1,23 @@
-module.exports = function(data, req, res, next) {
-    var header=req.headers.authorization||'',
-    token=header.split(/\s+/).pop()||'',
-    auth=new Buffer(token, 'base64').toString(),
-    credentials=auth.split(/:/);
-    var request_user_name = credentials[0];
-    var request_user_password = credentials[0];
-    data.getData('users', function (err, data) {
-        if (err) {
-            res.json(err);
-            return;
-        }
+// Load required packages
+var passport = require('passport');
+var BasicStrategy = require('passport-http').BasicStrategy;
+var data = require('../services/dataService.js')();
 
-        var user_name = data[0].name;
-        var user_password = data[0].password;
-        var authenticate =  request_user_name == user_name && user_password == request_user_password;
-        if (!authenticate) {
-            res.status(401);
-            res.json('authentication error');
-            return;
+passport.use(new BasicStrategy(
+  function(request_username, request_password, callback) {
+    data.getData('users', function (err, user) {
+        if (err) {
+            callback(err);
         }
-        
-        next();
+        var user_name = user[0].name;
+        var user_password = user[0].password;
+        var authenticate =  request_username == user_name && user_password == request_password;
+        if (!authenticate) {
+            callback(err);
+        }
+        return callback(null, user);
     });
-};
+  }
+));
+exports.isAuthenticated = passport.authenticate('basic', { session : false });
+

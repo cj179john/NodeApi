@@ -5,6 +5,7 @@ var jwt = require('jsonwebtoken');
 var config = require('./config.js');
 var cors = require('cors');
 var events = require('events');
+var passport = require('passport');
 
 //enable all cors call
 app.use(cors());
@@ -14,7 +15,7 @@ app.eventEmitter = new events.EventEmitter();
 require('./services/eventService.js')(app.eventEmitter);
 
 //bootstrap deps to app instance as DI container
-app.data = require('./services/dataService.js')(app);
+app.data = require('./services/dataService.js')();
 app.myRouter = express.Router();
 
 //load config
@@ -26,14 +27,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //authentication
+app.use(passport.initialize());
 var authentication_handler = require('./routesHandlers/authenticationHandler.js');
-app.myRouter.use(function (req, res, next) {
-    authentication_handler(app.data, req, res, next);
-});
 
 //mout data entity routes
 var data_entity_handler = require('./routesHandlers/dataEntityHandler.js')(app);
-app.use('/api/v1/entity', data_entity_handler);
+app.use('/api/v1/entity', authentication_handler.isAuthenticated, data_entity_handler);
 
 //error catcher
 var not_found_handler = require('./routesHandlers/notfoundDataHandler.js');
