@@ -6,7 +6,7 @@ module.exports = function(app) {
         data.getData(entity, function (err, entity_data) {
             if (err) {
                 app.eventEmitter.emit('error', {response:res, message: err});
-                next(err);
+                return next(err);
             }
             res.json(entity_data);
         });
@@ -27,10 +27,10 @@ module.exports = function(app) {
         }
         if (!entity_is_empty) {
 
-            data.insertData(entity, new_entity, function (err, result, next) {
+            data.insertData(entity, new_entity, function (err, result) {
                 if (err) {
                     app.eventEmitter.emit('error', {response:res, message: err});
-                    next(err);
+                    return next(err);
                 }
                 res.json(result);
             }); 

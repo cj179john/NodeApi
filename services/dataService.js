@@ -25,10 +25,11 @@ module.exports = function () {
         insertData : function (entity, data, callback) {
             var error;
             var dataEntity = this[entity];
-            if (typeof this[entity] == 'undefined') {
+            if (typeof dataEntity == 'undefined') {
                 error = 'entity ' + entity + ' is undefined'; 
+            } else {
+                dataEntity.push(data);
             }
-            dataEntity.push(data);
             callback(error, true);
         }, 
     };
