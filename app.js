@@ -1,55 +1,48 @@
-var express = require('express');
-var app = express();
-var bodyParser  = require('body-parser');
-var jwt = require('jsonwebtoken');
-var config = require('./config.js');
-var cors = require('cors');
-var events = require('events');
-var passport = require('passport');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const events = require('events');
+const passport = require('passport');
+const config = require('./config.js');
 
-//enable all cors call
+const app = express();
+// enable all cors call
 app.use(cors());
 
-//event emitter 
+// event emitter
 app.eventEmitter = new events.EventEmitter();
 require('./services/eventService.js')(app.eventEmitter);
 
-//bootstrap deps to app instance as DI container
+// bootstrap deps to app instance as DI container
 app.data = require('./services/dataService.js')();
+
 app.myRouter = express.Router();
 
-//load config
-var env = process.env.NODE_ENV? process.env.NODE_ENV : 'development';
+// load config
+const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 app.config = config[env];
 
-//convert request and respond bodies to json
+// convert request and respond bodies to json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//authentication
+// authentication
 app.use(passport.initialize());
-var authentication_handler = require('./routesHandlers/authenticationHandler.js');
+const authenticationHandler = require('./routesHandlers/authenticationHandler.js');
 
-//mout data entity routes
-var data_entity_handler = require('./routesHandlers/dataEntityHandler.js')(app);
-app.use('/api/v1/entity', authentication_handler.isAuthenticated, data_entity_handler);
+// mout data entity routes
+const dataEntityHandler = require('./routesHandlers/dataEntityHandler.js')(app);
 
-//error catcher
-var not_found_handler = require('./routesHandlers/notfoundDataHandler.js');
-app.use(function (req, res) {
-   not_found_handler(req, res, app.eventEmitter);
-});
+app.use('/api/v1/entity', authenticationHandler.isAuthenticated, dataEntityHandler);
 
-//start server on port 3000
-var server = app.listen(app.config.port, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-});
+// error catcher
+const notFoundDataHandler = require('./routesHandlers/notFoundDataHandler.js');
 
-process.on('uncaughtException', function(err){
-    console.log(err);
-    //Send some notification about the error  
-    process.exit(1);
-});
+app.use((req, res) => notFoundDataHandler(req, res, app.eventEmitter));
 
-exports = module.exports = app;
+// start server on port 3000
+app.listen(app.config.port);
+
+process.on('uncaughtException', () => process.exit(1));
+
+module.exports = app;

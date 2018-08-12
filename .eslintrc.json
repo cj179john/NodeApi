@@ -1,0 +1,25 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "jasmine": true
+  },
+  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "mocha",
+    "jasmine"
+  ],
+  "rules": {
+    "mocha/no-exclusive-tests": "error",
+    "indent": [2, "tab"],
+    "no-tabs": 0,
+    "func-names": ["error", "as-needed"],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
+  }
+}
