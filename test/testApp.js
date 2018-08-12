@@ -15,7 +15,7 @@ describe('Authentication', () => {
 		agent.get('/api/v1/entity/customers')
 			.auth('john', 'john')
 			.expect(200, done);
-  });
+	});
 });
 describe('Entity routes', () => {
 	it('200 OK for correct routing', (done) => {
@@ -29,5 +29,5 @@ describe('Entity routes', () => {
 			.auth('john', 'john')
 			.expect(500)
 			.expect('"entity incorrect is undefined"', done);
-  });
+	});
 });

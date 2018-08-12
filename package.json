@@ -1,22 +1,24 @@
 {
-  "name": "NodeApi-security",
-  "version": "0.0.0",
+  "name": "NodeAPI-security",
+  "version": "0.0.1",
   "description": "RESTAPI with authentication",
   "main": "index.js",
   "scripts": {
     "test": "node node_modules/mocha/bin/_mocha test/*.js",
     "lint": "node node_modules/eslint/bin/eslint ."
   },
-  "author": "",
+  "author": "John Jiang",
   "license": "ISC",
   "dependencies": {
     "async": "^2.6.0",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
+    "bunyan": "^1.8.12",
     "cors": "^2.7.1",
     "express": "^4.0.0",
     "express-jwt": "^5.3.1",
     "express-validator": "^5.3.0",
+    "gulp-eslint": "^5.0.0",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0"
   },
@@ -29,12 +31,6 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-mocha": "^5.1.0",
     "eslint-plugin-react": "^7.10.0",
-    "gulp": "^4.0.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-rimraf": "^0.1.1",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-uglify": "^1.2.0",
     "mocha": "^5.2.0",
     "supertest": "^3.1.0"
   }

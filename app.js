@@ -4,6 +4,7 @@ const cors = require('cors');
 const events = require('events');
 const passport = require('passport');
 const config = require('./config.js');
+const logger = require('./logger');
 
 const app = express();
 // enable all cors call
@@ -41,7 +42,7 @@ const notFoundDataHandler = require('./routesHandlers/notFoundDataHandler.js');
 app.use((req, res) => notFoundDataHandler(req, res, app.eventEmitter));
 
 // start server on port 3000
-app.listen(app.config.port);
+app.listen(app.config.port, () => logger.debug('App listening on port 3000'));
 
 process.on('uncaughtException', () => process.exit(1));
 
