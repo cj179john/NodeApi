@@ -1,7 +1,10 @@
-# NodeApi
-nodejs based RESTApi
+# NodeApi with JWT authentication
 
-prequisities: node server installed in local environment and NPM package manager
+nodejs based RESTAPI with JWT authentication
+
+This repository is primarily for boiler-plating a NodeJS API with JWT-authentication
+
+prequisities: node 8+ installed in local environment and NPM package manager
 
 git clone this repo to your local machine
 
