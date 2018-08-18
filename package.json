@@ -4,8 +4,9 @@
   "description": "RESTAPI with authentication",
   "main": "index.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/_mocha test/*.js",
-    "lint": "node node_modules/eslint/bin/eslint ."
+    "test": "node node_modules/mocha/bin/_mocha test/*.spec.js",
+    "lint": "node node_modules/eslint/bin/eslint .",
+    "log": "tail -f logs/api.log | bunyan"
   },
   "author": "John Jiang",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "express-jwt": "^5.3.1",
     "express-validator": "^5.3.0",
     "gulp-eslint": "^5.0.0",
+    "mongodb": "^3.1.3",
     "passport": "^0.4.0",
     "passport-http": "^0.3.0"
   },
@@ -31,7 +33,9 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-mocha": "^5.1.0",
     "eslint-plugin-react": "^7.10.0",
+    "expect": "^23.5.0",
     "mocha": "^5.2.0",
+    "rewire": "^4.0.1",
     "supertest": "^3.1.0"
   }
 }

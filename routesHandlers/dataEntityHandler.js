@@ -3,6 +3,7 @@ module.exports = function dataEntityHandler(app) {
 
 	app.myRouter.get('/:entity', (req, res, next) => {
 		const { entity } = req.params;
+
 		data.getData(entity, (err, entityData) => {
 			if (err) {
 				app.eventEmitter.emit('error', { response: res, message: err });

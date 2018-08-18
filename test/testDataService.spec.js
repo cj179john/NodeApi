@@ -1,10 +1,6 @@
-const express = require('express');
-const chai = require('chai');
+const { expect } = require('chai');
 
-const { expect } = chai;
-const app = express();
-
-const dataService = require('../services/dataService.js')(app);
+const dataService = require('../services/dataService.js');
 
 describe('data service test', () => {
 	let usersFixture;

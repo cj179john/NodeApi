@@ -17,8 +17,12 @@ module.exports = bunyan.createLogger({
 	},
 	streams: [
 		{
-			path: `${LOG_PATH}/info.log`,
+			path: `${LOG_PATH}/api.log`,
 			level: 'info',
+		},
+		{
+			path: `${LOG_PATH}/debug.log`,
+			level: 'debug',
 		},
 	],
 });

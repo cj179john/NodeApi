@@ -1,11 +1,21 @@
-module.exports = {
+const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'dev';
+
+const configs = {
 	test: {
-		port: 3333,
+		database: {
+			url: '127.0.0.1',
+			port: '27017',
+		},
+		port: 3999,
 	},
-	development: {
-		port: 3000,
-	},
-	production: {
-		port: 3000,
+	dev: {
+		database: {
+			url: '127.0.0.1',
+			port: '27017',
+			name: 'jwt-test',
+		},
+		port: 3009,
 	},
 };
+
+module.exports = configs[env];
