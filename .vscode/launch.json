@@ -8,9 +8,10 @@
     {
       "type": "node",
       "request": "launch",
-      "runtimeVersion": "8.11.1",
+      "runtimeVersion": "9.11.1",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/app.js"
+			"program": "${workspaceFolder}/bin/www.js",
+			"cwd": "${workspaceFolder}"
     }
   ]
 }

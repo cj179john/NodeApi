@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const events = require('events');
-const passport = require('passport');
 const config = require('./config.js');
+const routes = require('./routes');
 
 const app = express();
 // enable all cors call
@@ -26,14 +26,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // authentication
-app.use(passport.initialize());
-const authenticationHandler = require('./routesHandlers/authenticationHandler.js');
+// app.use(passport.initialize());
 
-// mout data entity routes
-// const dataEntityHandler = require('./routesHandlers/dataEntityHandler.js');
-
-// app.use('/api/v1/entity', authenticationHandler.isAuthenticated, dataEntityHandler);
-app.use('/api/v1/entity', authenticationHandler.isAuthenticated);
+app.use('/api/v1', routes);
 
 // error catcher
 const notFoundDataHandler = require('./routesHandlers/notFoundDataHandler.js');

@@ -20,6 +20,7 @@
     "func-names": ["error", "as-needed"],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
-    "semi": ["error", "always"]
+		"semi": ["error", "always"],
+		"no-underscore-dangle": "off"
   }
 }

@@ -1,6 +1,0 @@
-const app = require('../app');
-const logger = require('../logger');
-
-const { port } = app.config;
-
-app.listen(port, () => logger.debug(`App listening on port ${port}`));

@@ -5,10 +5,12 @@ const configs = {
 		database: {
 			url: '127.0.0.1',
 			port: '27017',
+			name: 'apiTest',
 		},
 		port: 3999,
 	},
 	dev: {
+		secret: 'thisisasecret',
 		database: {
 			url: '127.0.0.1',
 			port: '27017',
