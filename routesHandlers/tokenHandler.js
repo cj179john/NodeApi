@@ -9,11 +9,11 @@ function _getToken(email) {
 	return jwt.sign(payload, process.env.secret, { expiresIn: 1440 });
 }
 
-function handler(req, res, next) {
+async function handler(req, res, next) {
 	const { email, password } = req.body;
 
 	try {
-		const user = User.getUser(email);
+		const user = await User.getUser(email);
 		if (!user || user.password !== password) {
 			return next(new Error('Authenticated failed, user not found or password is invalid!'));
 		}

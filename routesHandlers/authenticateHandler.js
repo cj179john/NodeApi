@@ -6,10 +6,7 @@ const User = new UserModel(dbLib);
 const { secret } = process.env;
 
 module.exports = (req, res, next) => {
-  const token = req.get('x-api-key');
+	const token = req.get('x-api-key');
 
-  return jwt.verify(token, secret, (err) => {
-    return err ? next(err) : next();
-  });
-
+	return jwt.verify(token, secret, err => (err ? next(err) : next()));
 };
