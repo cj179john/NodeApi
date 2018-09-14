@@ -1,7 +1,7 @@
 module.exports = function dataEntityHandler(app) {
 	const { data } = app;
 
-	app.myRouter.get('/:entity', (req, res, next) => {
+	app.myRouter.get('/:id', (req, res, next) => {
 		const { entity } = req.params;
 
 		data.getData(entity, (err, entityData) => {

@@ -6,7 +6,7 @@ const User = new UserModel(dbLib);
 
 function _getToken(email) {
 	const payload = { email };
-	return jwt.sign(payload, process.env.secret, { expiresIn: 1440 });
+	return jwt.sign(payload, process.env.secret, { expiresIn: 14400 });
 }
 
 async function handler(req, res, next) {
