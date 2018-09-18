@@ -9,20 +9,27 @@ function _getToken(email) {
 	return jwt.sign(payload, process.env.secret, { expiresIn: 14400 });
 }
 
+async function _verifyUser(email, password) {
+	const user = await User.getUser(email);
+	if (!user || user[0].password !== password) {
+		throw new Error('Authenticated failed, user not found or password is invalid!');
+	}
+	return true;
+}
+
+function _getPayload(email) {
+	return {
+		success: true,
+		message: 'Token generated',
+		token: _getToken(email),
+	};
+}
 async function handler(req, res, next) {
 	const { email, password } = req.body;
 
 	try {
-		const user = await User.getUser(email);
-		if (!user || user.password !== password) {
-			return next(new Error('Authenticated failed, user not found or password is invalid!'));
-		}
-
-		return res.json({
-			success: true,
-			message: 'Token generated',
-			token: _getToken(email),
-		});
+		await _verifyUser(email, password);
+		return res.json(_getPayload(email));
 	} catch (e) {
 		return next(new Error(e));
 	}

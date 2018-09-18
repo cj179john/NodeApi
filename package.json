@@ -36,7 +36,9 @@
     "eslint-plugin-react": "^7.10.0",
     "expect": "^23.5.0",
     "mocha": "^5.2.0",
+    "proxyquire": "^2.1.0",
     "rewire": "^4.0.1",
+    "sinon": "^6.3.3",
     "supertest": "^3.1.0"
   }
 }
